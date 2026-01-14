@@ -72,9 +72,9 @@ String getword(){                                       //Wort aus der Liste neh
 void printcolor(customString[] first){
     for (int i = 0; i < 5; i++){
         if (first[i].getint() == 3){
-            IO.print(Backgroundcolor.ANSI_GREEN + first[i].getchar() + Backgroundcolor.ANSI_RESET);
-        } else if (first[i].getint() == 2) {
-            IO.print(Backgroundcolor.ANSI_YELLOW + first[i].getchar() + Backgroundcolor.ANSI_RESET);
-        }else  IO.print(first[i].getchar());
+            IO.print(Backgroundcolor.ANSI_GREEN + first[i].c + Backgroundcolor.ANSI_RESET);
+        } else if (first[i].color == 2) {
+            IO.print(Backgroundcolor.ANSI_YELLOW + first[i].c + Backgroundcolor.ANSI_RESET);
+        }else  IO.print(first[i].c);
     }
 }
