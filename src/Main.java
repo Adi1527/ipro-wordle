@@ -49,13 +49,12 @@ void lettercheck(String right, String guess) {           //kontrolliert jeden bu
     printcolor(colorchecker(first,rightword));
     IO.println();
 }
-
-String getword(String[] list){                                       //Wort aus der Liste nehmen, damit dieses erraten werden kann.
+String getword(String[] list){                                       //nimmt ein random wort aus dem array
     Random rng = new Random();
     int a = rng.nextInt(5359);
     return list[a];
 }
-String[] getarray(){
+String[] getarray(){                                                //macht aus der wortliste ein array.
     String[] list = new String[5359];
     InputStream is = getClass().getResourceAsStream("/Data/words_de.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -68,7 +67,7 @@ String[] getarray(){
     }
     return list;
 }
-void printcolor(customString[] first){
+void printcolor(customString[] first){                              //printed den guess in den Farben
     for (int i = 0; i < 5; i++){
         if (first[i].color == 1){
             IO.print(Backgroundcolor.ANSI_GREEN + first[i].c + Backgroundcolor.ANSI_RESET);
@@ -77,14 +76,14 @@ void printcolor(customString[] first){
         }else  IO.print(first[i].c);
     }
 }
-guessstring[] guesstoarray(String guess){
+guessstring[] guesstoarray(String guess){                           //verwandelt das richtige wort in einen array
     guessstring[] guessstring = new guessstring[5];
     for (int i = 0 ; i < 5; i++){
         guessstring[i] = new guessstring(guess.charAt(i),0);
     }
     return guessstring;
 }
-guessstring[] frequencycount(guessstring[] guess){
+guessstring[] frequencycount(guessstring[] guess){                  //zählt wie oft ein buchstabe im richtigen wort vorkommt falls mehrmals
     for (int i = 0; i < 5; i++){
         for (int j = 0; j < 5; j++){
             if (guess[i].c == guess[j].c && i != j){
@@ -94,7 +93,7 @@ guessstring[] frequencycount(guessstring[] guess){
     }
     return guess;
 }
-customString[] colorchecker(customString[] first, guessstring[] right){
+customString[] colorchecker(customString[] first, guessstring[] right){     //überprüft ob die farben richtig dem buchstaben zugeteilt wurden.
     for (int i = 0; i < 5; i++){
         for (int j = 0; j < 5; j++){
             if (right[i].c == first[j].c && first[j].color == -1 && right[i].frequency > 0){
