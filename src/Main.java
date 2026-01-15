@@ -1,6 +1,6 @@
 void main() {
     String[] words = getarray();
-    String toguess = getword(words);                         //zu errratendes Wort
+    String toguess = "statt";                         //zu errratendes Wort
     IO.print("Try to guess the 5 letter Word in maximum of 6 tries:\n>");
     String guess = input(words);                             //der Rateversuch
     if (firstcheck(toguess,guess)){                     // erster check ob es beim ersten versuch schon funktioniert.
@@ -10,6 +10,7 @@ void main() {
     fivequestions(toguess,guess, words);
     IO.println("richtiges Wort: "+ toguess);
 }
+
 
 void fivequestions (String toguess, String guess, String[] list){
     int count = 0;
@@ -28,42 +29,37 @@ String input(String[] list){                                         // nimmt ei
     }
     return guess;
 }
+
 boolean firstcheck(String right, String guess){         // erster check
     return (right.equals(guess));
 }
+
 void lettercheck(String right, String guess) {           //kontrolliert jeden buchstaben und gibt ihn in der entsprechenden Farbe zurück
     customString[] first = new customString[5];
     for (int i = 0; i < 5; i++) {
         String a = String.valueOf(guess.charAt(i));
         if (right.contains(a)){
             if(guess.charAt(i) == right.charAt(i)){
-                first[i] = new customString(guess.charAt(i), 3);
-            }else first[i] = new customString(guess.charAt(i), 2);
-        }else first[i] = new customString(guess.charAt(i), 1);
+                first[i] = new customString(guess.charAt(i), 1);
+            }else first[i] = new customString(guess.charAt(i), -1);
+        }else first[i] = new customString(guess.charAt(i), 0);
     }
-    printcolor(checkcolor(first));
+    guessstring[] rightword = guesstoarray(right);
+    rightword = frequencycount(rightword);
+    printcolor(colorchecker(first,rightword));
     IO.println();
 }
-customString[] checkcolor(customString[] first){
-    for (int k = 1; k < 5; k++){                                // in zusammenarbeit mit Kevin von Gunten haben wir den obigen Code verkürzt.
-        for (int f = k - 1; f >= 0; f--){
-            if (first[f].color == 2 && first[k].c == first[f].c && first[k].color == first[f].color){
-                first[k].color = 1;
-            }
-        }
-    }
-    return first;
-}
+
 String getword(String[] list){                                       //Wort aus der Liste nehmen, damit dieses erraten werden kann.
     Random rng = new Random();
-    int a = rng.nextInt(5352);
+    int a = rng.nextInt(5359);
     return list[a];
 }
 String[] getarray(){
-    String[] list = new String[5352];
+    String[] list = new String[5359];
     InputStream is = getClass().getResourceAsStream("/Data/words_de.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-    for (int i = 0; i < 5352; i++){
+    for (int i = 0; i < 5359; i++){
         try {
             list[i] = reader.readLine();
         } catch (IOException e){
@@ -74,10 +70,41 @@ String[] getarray(){
 }
 void printcolor(customString[] first){
     for (int i = 0; i < 5; i++){
-        if (first[i].color == 3){
+        if (first[i].color == 1){
             IO.print(Backgroundcolor.ANSI_GREEN + first[i].c + Backgroundcolor.ANSI_RESET);
-        } else if (first[i].color == 2) {
+        } else if (first[i].color == -1) {
             IO.print(Backgroundcolor.ANSI_YELLOW + first[i].c + Backgroundcolor.ANSI_RESET);
         }else  IO.print(first[i].c);
     }
+}
+guessstring[] guesstoarray(String guess){
+    guessstring[] guessstring = new guessstring[5];
+    for (int i = 0 ; i < 5; i++){
+        guessstring[i] = new guessstring(guess.charAt(i),0);
+    }
+    return guessstring;
+}
+guessstring[] frequencycount(guessstring[] guess){
+    for (int i = 0; i < 5; i++){
+        for (int j = 0; j < 5; j++){
+            if (guess[i].c == guess[j].c && i != j){
+                guess[i].frequency++;
+            }
+        }
+    }
+    return guess;
+}
+customString[] colorchecker(customString[] first, guessstring[] right){
+    for (int i = 0; i < 5; i++){
+        for (int j = 0; j < 5; j++){
+            if (right[i].c == first[j].c && first[j].color == -1 && right[i].frequency > 0){
+                for (int k = 0; k < 5; k++){
+                    if (right[k].c == first[j].c){
+                        right[k].frequency = right[k].frequency - 2;
+                    }else first[j].color = 0;
+                }
+            }
+        }
+    }
+    return first;
 }
