@@ -1,27 +1,28 @@
 void main() {
-    String toguess = getword();                         //zu errratendes Wort
+    String[] words = getarray();
+    String toguess = getword(words);                         //zu errratendes Wort
     IO.print("Try to guess the 5 letter Word in maximum of 6 tries:\n>");
-    String guess = input();                             //der Rateversuch
+    String guess = input(words);                             //der Rateversuch
     if (firstcheck(toguess,guess)){                     // erster check ob es beim ersten versuch schon funktioniert.
         IO.println(Backgroundcolor.ANSI_GREEN+guess+Backgroundcolor.ANSI_RESET);
         IO.println("Richtig!!");
     }
-    fivequestions(toguess,guess);
+    fivequestions(toguess,guess, words);
     IO.println("richtiges Wort: "+ toguess);
 }
 
-void fivequestions (String toguess, String guess){
+void fivequestions (String toguess, String guess, String[] list){
     int count = 0;
     while (!toguess.equals(guess) && count != 5){       //weitere checks mit aufforderung zum nochmals raten.
         lettercheck(toguess,guess);
-        guess = input();
+        guess = input(list);
         count++;
     }
 }
-String input(){                                         // nimmt einen 5 buchstaben langen Input.
+String input(String[] list){                                         // nimmt einen 5 buchstaben langen Input.
     String guess = IO.readln();                         // soll noch kontrollieren ob der Input ein wort ist
-    while (guess.length() != 5) {
-        IO.println("FIVE Letters please");
+    while (!Arrays.asList(list).contains(guess)) {
+        IO.println("Dieses Wort ist mir nicht bekannt, oder nicht 5 Buchstaben lang.");
         guess = IO.readln();
         IO.println();
     }
@@ -53,7 +54,12 @@ customString[] checkcolor(customString[] first){
     }
     return first;
 }
-String getword(){                                       //Wort aus der Liste nehmen, damit dieses erraten werden kann.
+String getword(String[] list){                                       //Wort aus der Liste nehmen, damit dieses erraten werden kann.
+    Random rng = new Random();
+    int a = rng.nextInt(5352);
+    return list[a];
+}
+String[] getarray(){
     String[] list = new String[5352];
     InputStream is = getClass().getResourceAsStream("/Data/words_de.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -64,9 +70,7 @@ String getword(){                                       //Wort aus der Liste neh
             throw new RuntimeException(e);
         }
     }
-    Random rng = new Random();
-    int a = rng.nextInt(5352);
-    return list[a];
+    return list;
 }
 void printcolor(customString[] first){
     for (int i = 0; i < 5; i++){
