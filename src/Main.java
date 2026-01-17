@@ -1,27 +1,29 @@
 void main() {
     String[] words = getarray();
-    String toguess = "statt";                         //zu errratendes Wort
-    IO.print("Try to guess the 5 letter Word in maximum of 6 tries:\n>");
+    String toguess = getword(words);                         //zu errratendes Wort
+    IO.print("Try to guess the 5 letter Word in maximum of 6 tries: (use lowercase letters)\n>>>");
     String guess = input(words);                             //der Rateversuch
     if (firstcheck(toguess,guess)){                     // erster check ob es beim ersten versuch schon funktioniert.
         IO.println(Backgroundcolor.ANSI_GREEN+guess+Backgroundcolor.ANSI_RESET);
         IO.println("Richtig!!");
     }
-    fivequestions(toguess,guess, words);
+    guessstring[] zuraten = guesstoarray(toguess);
+    guessstring[] zuratennew = frequencycount(zuraten);
+    fivequestions(toguess,guess, words, zuratennew);
     IO.println("richtiges Wort: "+ toguess);
 }
 
-
-void fivequestions (String toguess, String guess, String[] list){
+void fivequestions (String toguess, String guess, String[] list, guessstring[] zuraten){
     int count = 0;
     while (!toguess.equals(guess) && count != 5){       //weitere checks mit aufforderung zum nochmals raten.
-        lettercheck(toguess,guess);
+        customString[] geraten = theguesstoarray(guess);
+        checkletterandcolor(geraten,zuraten);
         guess = input(list);
         count++;
     }
 }
 String input(String[] list){                                         // nimmt einen 5 buchstaben langen Input.
-    String guess = IO.readln();                         // soll noch kontrollieren ob der Input ein wort ist
+    String guess = IO.readln().toLowerCase(Locale.ROOT);                         // soll noch kontrollieren ob der Input ein wort ist
     while (!Arrays.asList(list).contains(guess)) {
         IO.println("Dieses Wort ist mir nicht bekannt, oder nicht 5 Buchstaben lang.");
         guess = IO.readln();
@@ -34,31 +36,23 @@ boolean firstcheck(String right, String guess){         // erster check
     return (right.equals(guess));
 }
 
-void lettercheck(String right, String guess) {           //kontrolliert jeden buchstaben und gibt ihn in der entsprechenden Farbe zurück
+customString[] theguesstoarray(String guess) {           //kontrolliert jeden buchstaben und gibt ihn in der entsprechenden Farbe zurück
     customString[] first = new customString[5];
     for (int i = 0; i < 5; i++) {
-        String a = String.valueOf(guess.charAt(i));
-        if (right.contains(a)){
-            if(guess.charAt(i) == right.charAt(i)){
-                first[i] = new customString(guess.charAt(i), 1);
-            }else first[i] = new customString(guess.charAt(i), -1);
-        }else first[i] = new customString(guess.charAt(i), 0);
+        first[i] = new customString(guess.charAt(i), 0);
     }
-    guessstring[] rightword = guesstoarray(right);
-    rightword = frequencycount(rightword);
-    printcolor(colorchecker(first,rightword));
-    IO.println();
+    return first;
 }
 String getword(String[] list){                                       //nimmt ein random wort aus dem array
     Random rng = new Random();
-    int a = rng.nextInt(5359);
+    int a = rng.nextInt(5353);
     return list[a];
 }
 String[] getarray(){                                                //macht aus der wortliste ein array.
-    String[] list = new String[5359];
+    String[] list = new String[5353];
     InputStream is = getClass().getResourceAsStream("/Data/words_de.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-    for (int i = 0; i < 5359; i++){
+    for (int i = 0; i < 5353; i++){
         try {
             list[i] = reader.readLine();
         } catch (IOException e){
@@ -93,17 +87,31 @@ guessstring[] frequencycount(guessstring[] guess){                  //zählt wie
     }
     return guess;
 }
-customString[] colorchecker(customString[] first, guessstring[] right){     //überprüft ob die farben richtig dem buchstaben zugeteilt wurden.
-    for (int i = 0; i < 5; i++){
-        for (int j = 0; j < 5; j++){
-            if (right[i].c == first[j].c && first[j].color == -1 && right[i].frequency > 0){
-                for (int k = 0; k < 5; k++){
-                    if (right[k].c == first[j].c){
-                        right[k].frequency = right[k].frequency - 2;
-                    }else first[j].color = 0;
+void checkletterandcolor(customString[] guess, guessstring[] right) {
+    // Temporäres Array für Häufigkeiten erstellen
+    int[] tempFreq = new int[5];
+    for (int i = 0; i < 5; i++) {
+        tempFreq[i] = right[i].frequency + 1; // +1 weil das Original auch mitgezählt werden muss
+    }
+    // Erst alle grünen markieren
+    for (int i = 0; i < 5; i++) {
+        if (guess[i].c == right[i].c) {
+            guess[i].color = 1; // grün
+            tempFreq[i]--; // Häufigkeit reduzieren
+        }
+    }
+    // Dann gelbe markieren
+    for (int i = 0; i < 5; i++) {
+        if (guess[i].color == 0) {
+            for (int j = 0; j < 5; j++) {
+                if (guess[i].c == right[j].c && tempFreq[j] > 0) {
+                    guess[i].color = -1;
+                    tempFreq[j]--;
+                    break;  // durch das break wird eine Postition nur einmal kontrolliert und führt nicht zu falschen markierungen.
                 }
             }
         }
     }
-    return first;
+    printcolor(guess);
+    IO.println();
 }
