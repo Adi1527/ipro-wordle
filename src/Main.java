@@ -23,7 +23,7 @@ void fivequestions (String toguess, String guess, String[] list, guessstring[] z
     }
 }
 String input(String[] list){                                         // nimmt einen 5 buchstaben langen Input.
-    String guess = IO.readln().toLowerCase(Locale.ROOT);                         // soll noch kontrollieren ob der Input ein wort ist
+    String guess = IO.readln().toLowerCase();                         // soll noch kontrollieren ob der Input ein wort ist
     while (!Arrays.asList(list).contains(guess)) {
         IO.println("Dieses Wort ist mir nicht bekannt, oder nicht 5 Buchstaben lang.");
         guess = IO.readln();
