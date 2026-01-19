@@ -3,10 +3,9 @@ import wordle.controller.WordleModel;
 import wordle.view.gui.WordleGUI;
 
 void main() {
-    // TODO: Wordlemodelobjekt, Wordlecontrollerobjekt, Wordleguiobjekt, gui.proceeduntilclosed.
     WordleModel model = new WordleModel();
     WordleController controller = new WordleController(model);
-    WordleGUI gui = new WordleGUI(controller, 60);
+    WordleGUI gui = new WordleGUI(controller, 24);
     gui.proceedUntilClosed();
 
 

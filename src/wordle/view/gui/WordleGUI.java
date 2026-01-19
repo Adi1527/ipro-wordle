@@ -20,8 +20,10 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
 
     @Override
     protected Component[] createComponents(WordleModel model) {
-        Component[] components = new Component[1];
+        Component[] components = new Component[3];
         components[0] = new Background();
+        components[1] = new Gridshadow();
+        components[2] = new Grid5x6();
         return components;
     }
 }
