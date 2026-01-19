@@ -103,12 +103,13 @@ void checkletterandcolor(customString[] guess, guessstring[] right) {
     // Dann gelbe markieren
     for (int i = 0; i < 5; i++) {
         if (guess[i].color == 0) {
-            for (int j = 0; j < 5; j++) {
-                if (guess[i].c == right[j].c && tempFreq[j] > 0) {
-                    guess[i].color = -1;
-                    tempFreq[j]--;
-                    break;  // durch das break wird eine Postition nur einmal kontrolliert und führt nicht zu falschen markierungen.
-                }
+            int j = 0;
+            while (j < 5 && !(guess[i].c == right[j].c && tempFreq[j] > 0)) {
+                j++;
+            }
+            if (j < 5) {
+                guess[i].color = -1;
+                tempFreq[j]--;
             }
         }
     }
