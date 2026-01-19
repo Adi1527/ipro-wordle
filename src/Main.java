@@ -1,16 +1,28 @@
+import wordle.controller.WordleController;
+import wordle.controller.WordleModel;
+import wordle.view.gui.WordleGUI;
+
 void main() {
-    String[] words = getarray();
-    String toguess = getword(words);                         //zu errratendes Wort
-    IO.print("Try to guess the 5 letter Word in maximum of 6 tries: (use lowercase letters)\n>>>");
-    String guess = input(words);                             //der Rateversuch
-    if (firstcheck(toguess,guess)){                     // erster check ob es beim ersten versuch schon funktioniert.
-        IO.println(Backgroundcolor.ANSI_GREEN+guess+Backgroundcolor.ANSI_RESET);
-        IO.println("Richtig!!");
-    }
-    guessstring[] zuraten = guesstoarray(toguess);
-    guessstring[] zuratennew = frequencycount(zuraten);
-    fivequestions(toguess,guess, words, zuratennew);
-    IO.println("richtiges Wort: "+ toguess);
+    // TODO: Wordlemodelobjekt, Wordlecontrollerobjekt, Wordleguiobjekt, gui.proceeduntilclosed.
+    WordleModel model = new WordleModel();
+    WordleController controller = new WordleController(model);
+    WordleGUI gui = new WordleGUI(controller, 60);
+    gui.proceedUntilClosed();
+
+
+
+//    String[] words = getarray();
+//    String toguess = getword(words);                         //zu errratendes Wort
+//    IO.print("Try to guess the 5 letter Word in maximum of 6 tries: (use lowercase letters)\n>>>");
+//    String guess = input(words);                             //der Rateversuch
+//    if (firstcheck(toguess,guess)){                     // erster check ob es beim ersten versuch schon funktioniert.
+//        IO.println(Backgroundcolor.ANSI_GREEN+guess+Backgroundcolor.ANSI_RESET);
+//        IO.println("Richtig!!");
+//    }
+//    guessstring[] zuraten = guesstoarray(toguess);
+//    guessstring[] zuratennew = frequencycount(zuraten);
+//    fivequestions(toguess,guess, words, zuratennew);
+//    IO.println("richtiges Wort: "+ toguess);
 }
 
 void fivequestions (String toguess, String guess, String[] list, guessstring[] zuraten){
