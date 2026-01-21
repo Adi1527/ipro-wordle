@@ -11,4 +11,12 @@ public class WordleController extends ControllerBase<WordleModel> {
     public WordleController(WordleModel model) {
         super(model);
     }
+
+    public void handleKeyInput(char key) {
+        char lowerKey = Character.toLowerCase(key);
+        if (lowerKey >= 'a' && lowerKey <= 'z') {
+            model.addLetter(lowerKey);
+
+        }
+    }
 }

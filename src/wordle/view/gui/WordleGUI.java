@@ -12,6 +12,14 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
     public static final double IMG_HEIGHT = 397;
     public static final double SCALE = 2;
 
+    Label[][] label = new Label[6][5];
+
+    public void setupEventHandler(WordleController controller){
+
+    }
+
+
+
     private Button[] buttons;
 
     public WordleGUI(WordleController controller, int frameRate) {
@@ -26,6 +34,11 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         components[1] = new Gridshadow();
         components[2] = new Grid5x6();
         components[3] = new Tastatur();
+        for (int i = 0; i < 6; i++){
+            for (int j = 0; j < 5; j++){
+                label[i][j] = new Label()
+            }
+        }
         return components;
     }
 }
