@@ -5,7 +5,7 @@ import wordle.view.gui.WordleGUI;
 void main() {
     WordleModel model = new WordleModel();
     WordleController controller = new WordleController(model);
-    WordleGUI gui = new WordleGUI(controller, 24);
+    WordleGUI gui = new WordleGUI(controller, 60);
     gui.proceedUntilClosed();
 
 
@@ -59,6 +59,11 @@ String getword(String[] list){                                       //nimmt ein
     int a = rng.nextInt(5353);
     return list[a];
 }
+
+/**
+ * Mach aus der Wortliste ein array
+ * @return das Arr
+ */
 String[] getarray(){                                                //macht aus der wortliste ein array.
     String[] list = new String[5353];
     InputStream is = getClass().getResourceAsStream("/Data/words_de.txt");
