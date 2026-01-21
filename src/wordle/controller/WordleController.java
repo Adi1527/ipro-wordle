@@ -19,4 +19,11 @@ public class WordleController extends ControllerBase<WordleModel> {
 
         }
     }
+    public void handleBackspace() {
+        model.removeLetter();
+    }
+
+    public void handleEnter() {
+        model.submitword();
+    }
 }

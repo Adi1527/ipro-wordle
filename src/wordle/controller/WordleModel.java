@@ -15,8 +15,8 @@ public class WordleModel {
 
     public void removeLetter(){
         if (currentcol > 0){
-            grid[currentrow][currentcol] = "";
             currentcol--;
+            grid[currentrow][currentcol] = "";
         }
     }
 
