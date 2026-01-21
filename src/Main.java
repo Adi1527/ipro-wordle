@@ -10,6 +10,8 @@ void main() {
 
 
 
+
+
 //    String[] words = getarray();
 //    String toguess = getword(words);                         //zu errratendes Wort
 //    IO.print("Try to guess the 5 letter Word in maximum of 6 tries: (use lowercase letters)\n>>>");
