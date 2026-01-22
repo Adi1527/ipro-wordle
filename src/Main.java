@@ -1,42 +1,53 @@
-import wordle.controller.WordleController;
-import wordle.controller.WordleModel;
-import wordle.view.gui.WordleGUI;
-
 void main() {
-    WordleModel model = new WordleModel();
-    WordleController controller = new WordleController(model);
-    WordleGUI gui = new WordleGUI(controller, 60);
-    gui.proceedUntilClosed();
+//    WordleModel model = new WordleModel();
+//    WordleController controller = new WordleController(model);
+//    WordleGUI gui = new WordleGUI(controller, 60);
+//    gui.proceedUntilClosed();
 
 
-
-
-
-//    String[] words = getarray();
-//    String toguess = getword(words);                         //zu errratendes Wort
-//    IO.print("Try to guess the 5 letter Word in maximum of 6 tries: (use lowercase letters)\n>>>");
-//    String guess = input(words);                             //der Rateversuch
-//    if (firstcheck(toguess,guess)){                     // erster check ob es beim ersten versuch schon funktioniert.
-//        IO.println(Backgroundcolor.ANSI_GREEN+guess+Backgroundcolor.ANSI_RESET);
-//        IO.println("Richtig!!");
-//    }
-//    guessstring[] zuraten = guesstoarray(toguess);
-//    guessstring[] zuratennew = frequencycount(zuraten);
-//    fivequestions(toguess,guess, words, zuratennew);
-//    IO.println("richtiges Wort: "+ toguess);
+    String[] words = GetArray();
+    String toguess = GetWord(words);                                    //zu errratendes Wort
+    IO.print("Try to guess the 5 letter Word in maximum of 6 tries: (use lowercase letters)\n>>>");
+    String guess = Input(words);                                        //der Rateversuch
+    if (FirstCheck(toguess,guess)){                                     // erster check ob es beim ersten versuch schon funktioniert.
+        IO.println(Backgroundcolor.ANSI_GREEN+guess+Backgroundcolor.ANSI_RESET);
+        IO.println("Richtig!!");
+    }
+    GuessString[] zuraten = GuessToArray(toguess);
+    GuessString[] zuratennew = FrequencyCount(zuraten);
+    FiveQuestions(toguess,guess, words, zuratennew);
 }
 
-void fivequestions (String toguess, String guess, String[] list, guessstring[] zuraten){
+/**
+ * Diese Methode sorgt dafür das solange nicht 6 versuche durchgeführt wurden und das Wort noch nicht erraten
+ * wurde, dass noch weitergefragt wird.
+ * @param toguess Der zu erratende String
+ * @param guess Der erratene String des Users
+ * @param list Ein Array welches alle Wörter enthält welche möglich sind als Eingabe oder als Rateziel.
+ * @param zuraten Ein Array Welches das zu erratende Wort in Char's abgespeichert hat und zudem noch die Info,
+ *                wie Oft ein Char vorkommt im Wort
+ */
+void FiveQuestions (String toguess, String guess, String[] list, GuessString[] zuraten){
     int count = 0;
-    while (!toguess.equals(guess) && count != 5){       //weitere checks mit aufforderung zum nochmals raten.
-        customString[] geraten = theguesstoarray(guess);
-        checkletterandcolor(geraten,zuraten);
-        guess = input(list);
+    while (!toguess.equals(guess) && count < 5){
+        CustomString[] geraten = TheGuessToArray(guess);
+        CheckLetterAndColor(geraten,zuraten);
+        guess = Input(list);
         count++;
     }
+    if (toguess.equals(guess)){
+        IO.println("Richtig gerraten!");
+    }else     IO.println("richtiges Wort: "+ toguess);
+
 }
-String input(String[] list){                                         // nimmt einen 5 buchstaben langen Input.
-    String guess = IO.readln().toLowerCase();                         // soll noch kontrollieren ob der Input ein wort ist
+
+/**
+ *Nimmt den Input in die Konsole und Konsole und Kontrolliert ob dieser in der Wort Liste vorkommt.
+ * @param list Ein Array welches alle Wörter enthält welche möglich sind als Eingabe oder als Rateziel.
+ * @return Gibt das erratene Wort zurück solange es korrekt ist.
+ */
+String Input(String[] list){
+    String guess = IO.readln().toLowerCase();
     while (!Arrays.asList(list).contains(guess)) {
         IO.println("Dieses Wort ist mir nicht bekannt, oder nicht 5 Buchstaben lang.");
         guess = IO.readln();
@@ -45,18 +56,35 @@ String input(String[] list){                                         // nimmt ei
     return guess;
 }
 
-boolean firstcheck(String right, String guess){         // erster check
+/**
+ * Überprüft ob das erattene mit dem zu erratenden übereinstimmt.
+ * @param right zu erratendes Wort
+ * @param guess geratenes Wort
+ * @return true oder false Rückgabe.
+ */
+boolean FirstCheck(String right, String guess){
     return (right.equals(guess));
 }
 
-customString[] theguesstoarray(String guess) {           //kontrolliert jeden buchstaben und gibt ihn in der entsprechenden Farbe zurück
-    customString[] first = new customString[5];
+/**
+ * Wandelt das zu erratene Wort in einen Array um.
+ * @param guess Das vom User erratene Wort
+ * @return gibt das erratene Wort als Array zurück gibt in CustomString form.
+ */
+CustomString[] TheGuessToArray(String guess) {
+    CustomString[] first = new CustomString[5];
     for (int i = 0; i < 5; i++) {
-        first[i] = new customString(guess.charAt(i), 0);
+        first[i] = new CustomString(guess.charAt(i), 0);
     }
     return first;
 }
-String getword(String[] list){                                       //nimmt ein random wort aus dem array
+
+/**
+ *Nimmt aus dem Array mit allen Wörtern ein Random Wort das erraten werden muss.
+ * @param list Array mit allen Wörtern.
+ * @return Das Wort welches erraten werden muss.
+ */
+String GetWord(String[] list){
     Random rng = new Random();
     int a = rng.nextInt(5353);
     return list[a];
@@ -64,9 +92,9 @@ String getword(String[] list){                                       //nimmt ein
 
 /**
  * Mach aus der Wortliste ein array
- * @return das Arr
+ * @return Ein Array mit allen Wörtern welche als Ziel möglich sind und als Eingabe.
  */
-String[] getarray(){                                                //macht aus der wortliste ein array.
+String[] GetArray(){
     String[] list = new String[5353];
     InputStream is = getClass().getResourceAsStream("/Data/words_de.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -79,7 +107,12 @@ String[] getarray(){                                                //macht aus 
     }
     return list;
 }
-void printcolor(customString[] first){                              //printed den guess in den Farben
+
+/**
+ * Printed gemäss den Farben welche im CustomString Array sind die Farben und die Char's.
+ * @param first Das Wort welches zuletzt geraten wurde.
+ */
+void PrintColor(CustomString[] first){
     for (int i = 0; i < 5; i++){
         if (first[i].color == 1){
             IO.print(Backgroundcolor.ANSI_GREEN + first[i].c + Backgroundcolor.ANSI_RESET);
@@ -88,14 +121,26 @@ void printcolor(customString[] first){                              //printed de
         }else  IO.print(first[i].c);
     }
 }
-guessstring[] guesstoarray(String guess){                           //verwandelt das richtige wort in einen array
-    guessstring[] guessstring = new guessstring[5];
+
+/**
+ * Verwandelt das zu erratende Wort in ein Array
+ * @param guess Das Wort welches erraten werden muss.
+ * @return Das zu erratende Wort als Array.
+ */
+GuessString[] GuessToArray(String guess){
+    GuessString[] guessstring = new GuessString[5];
     for (int i = 0 ; i < 5; i++){
-        guessstring[i] = new guessstring(guess.charAt(i),0);
+        guessstring[i] = new GuessString(guess.charAt(i),0);
     }
     return guessstring;
 }
-guessstring[] frequencycount(guessstring[] guess){                  //zählt wie oft ein buchstabe im richtigen wort vorkommt falls mehrmals
+
+/**
+ * Zählt wie oft ein Buchstabe im richtigen Wort vorkommt.
+ * @param guess Das richtige Wort.
+ * @return Das richtige Wort mit der frequency der Buchstaben.
+ */
+GuessString[] FrequencyCount(GuessString[] guess){
     for (int i = 0; i < 5; i++){
         for (int j = 0; j < 5; j++){
             if (guess[i].c == guess[j].c && i != j){
@@ -105,7 +150,14 @@ guessstring[] frequencycount(guessstring[] guess){                  //zählt wie
     }
     return guess;
 }
-void checkletterandcolor(customString[] guess, guessstring[] right) {
+
+/**
+ * Kontrolliert die Buchstaben und weist jenen Grün zu welche am richtigen Ort sind, jene welche am falschen Ort sind,
+ * aber im zu erratenden Wort sind werden Gelb.
+ * @param guess der gerratene String.
+ * @param right der zu erratende String.
+ */
+void CheckLetterAndColor(CustomString[] guess, GuessString[] right) {
     // Temporäres Array für Häufigkeiten erstellen
     int[] tempFreq = new int[5];
     for (int i = 0; i < 5; i++) {
@@ -131,6 +183,6 @@ void checkletterandcolor(customString[] guess, guessstring[] right) {
             }
         }
     }
-    printcolor(guess);
+    PrintColor(guess);
     IO.println();
 }

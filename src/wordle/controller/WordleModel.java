@@ -7,7 +7,7 @@ public class WordleModel {
     int currentcol = 0;
 
     public void addLetter(char letter){
-        if (currentcol < 5){
+        if (currentcol < 5 && currentrow < 6){
             grid[currentrow][currentcol] = String.valueOf(letter).toUpperCase();
             currentcol++;
         }

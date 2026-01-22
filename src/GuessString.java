@@ -1,8 +1,8 @@
-public class guessstring {
+public class GuessString {
     char c;
     int frequency = 0;
 
-    guessstring(char c, int frequency){
+    GuessString(char c, int frequency){
         this.c = c;
         this.frequency = frequency;
     }
