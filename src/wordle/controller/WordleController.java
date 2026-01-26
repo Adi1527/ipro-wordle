@@ -2,6 +2,7 @@ package wordle.controller;
 
 import ch.mvcbase.ControllerBase;
 
+
 public class WordleController extends ControllerBase<WordleModel> {
     /**
      * The Controller needs a Model.
@@ -12,13 +13,14 @@ public class WordleController extends ControllerBase<WordleModel> {
         super(model);
     }
 
+
     public void handleKeyInput(char key) {
         char lowerKey = Character.toLowerCase(key);
         if (lowerKey >= 'a' && lowerKey <= 'z') {
             model.addLetter(lowerKey);
-
         }
     }
+
 
     public void handleBackspace() {
         model.removeLetter();
@@ -28,3 +30,4 @@ public class WordleController extends ControllerBase<WordleModel> {
         model.submitword();
     }
 }
+

@@ -1,21 +1,25 @@
+import wordle.controller.WordleController;
+import wordle.controller.WordleModel;
+import wordle.view.gui.WordleGUI;
+
 void main() {
-//    WordleModel model = new WordleModel();
-//    WordleController controller = new WordleController(model);
-//    WordleGUI gui = new WordleGUI(controller, 60);
-//    gui.proceedUntilClosed();
+    WordleModel model = new WordleModel();
+    WordleController controller = new WordleController(model);
+    WordleGUI gui = new WordleGUI(controller, 60);
+    gui.proceedUntilClosed();
 
 
-    String[] words = GetArray();
-    String toguess = GetWord(words);                                    //zu errratendes Wort
-    IO.print("Try to guess the 5 letter Word in maximum of 6 tries: (use lowercase letters)\n>>>");
-    String guess = Input(words);                                        //der Rateversuch
-    if (FirstCheck(toguess,guess)){                                     // erster check ob es beim ersten versuch schon funktioniert.
-        IO.println(Backgroundcolor.ANSI_GREEN+guess+Backgroundcolor.ANSI_RESET);
-        IO.println("Richtig!!");
-    }
-    GuessString[] zuraten = GuessToArray(toguess);
-    GuessString[] zuratennew = FrequencyCount(zuraten);
-    FiveQuestions(toguess,guess, words, zuratennew);
+//    String[] words = GetArray();
+//    String toguess = GetWord(words);                                    //zu errratendes Wort
+//    IO.print("Try to guess the 5 letter Word in maximum of 6 tries: (use lowercase letters)\n>>>");
+//    String guess = Input(words);                                        //der Rateversuch
+//    if (FirstCheck(toguess,guess)){                                     // erster check ob es beim ersten versuch schon funktioniert.
+//        IO.println(Backgroundcolor.ANSI_GREEN+guess+Backgroundcolor.ANSI_RESET);
+//        IO.println("Richtig!!");
+//    }
+//    GuessString[] zuraten = GuessToArray(toguess);
+//    GuessString[] zuratennew = FrequencyCount(zuraten);
+//    FiveQuestions(toguess,guess, words, zuratennew);
 }
 
 /**
@@ -115,9 +119,9 @@ String[] GetArray(){
 void PrintColor(CustomString[] first){
     for (int i = 0; i < 5; i++){
         if (first[i].color == 1){
-            IO.print(Backgroundcolor.ANSI_GREEN + first[i].c + Backgroundcolor.ANSI_RESET);
+            IO.print(BackGroundColor.ANSI_GREEN + first[i].c + BackGroundColor.ANSI_RESET);
         } else if (first[i].color == -1) {
-            IO.print(Backgroundcolor.ANSI_YELLOW + first[i].c + Backgroundcolor.ANSI_RESET);
+            IO.print(BackGroundColor.ANSI_YELLOW + first[i].c + BackGroundColor.ANSI_RESET);
         }else  IO.print(first[i].c);
     }
 }
@@ -185,4 +189,38 @@ void CheckLetterAndColor(CustomString[] guess, GuessString[] right) {
     }
     PrintColor(guess);
     IO.println();
+}
+
+/**
+ * Speichert den Char welcher zurückgegebn werden muss und auch welche Farbe dieser hat 1=Grün (-1)=Gelb 0=Grau
+ */
+public class CustomString {
+    char c;
+    int color = 0;
+    CustomString(char c, int color){
+        this.c = c;
+        this.color = color;
+    }
+}
+
+/**
+ * Speichert den Char und die Häufigkeit wie oft ein Buchstabe vorkommt.
+ */
+public class GuessString {
+    char c;
+    int frequency = 0;
+
+    GuessString(char c, int frequency){
+        this.c = c;
+        this.frequency = frequency;
+    }
+}
+
+/**
+ * Die Farben welche gebraucht werden um es in der Konsole anzuzeigen.
+ */
+public class BackGroundColor {
+    public static final String ANSI_RESET = "\u001B[0m"; //Reset Farbe
+    public static final String ANSI_YELLOW = "\u001B[33m"; // Gelb
+    public static final String ANSI_GREEN = "\u001B[32m"; // Grün
 }
