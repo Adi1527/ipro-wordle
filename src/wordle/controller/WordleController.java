@@ -11,6 +11,10 @@ public class WordleController extends ControllerBase<WordleModel> {
     public void handleKeyInput(char key) {
         // Blockiere Input wenn Spiel vorbei
         if (model.isGameWon() || model.isGameLost()) {
+            char lowerKey = Character.toLowerCase(key);
+            if (lowerKey == 'r'){
+                model.Reset();
+            }
             return;
         }
         char lowerKey = Character.toLowerCase(key);

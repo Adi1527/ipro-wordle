@@ -121,14 +121,6 @@ public class WordleModel {
         return currentrow;
     }
 
-    public int getCurrentCol() {
-        return currentcol;
-    }
-
-    // NEU: Prüfen ob Wort gültig ist (für Controller)
-    public boolean isValidWord(String word) {
-        return Arrays.asList(WordList).contains(word.toLowerCase());
-    }
 
     CustomString[] CheckLetterAndColor(CustomString[] guess, GuessString[] right) {
         // Temporäres Array für Häufigkeiten erstellen
@@ -220,7 +212,6 @@ public class WordleModel {
         gameLost = false;
         Solution = GetRandomWord(WordList);
         SolutionArray = GuessToArray(Solution);
-
     }
 
 
