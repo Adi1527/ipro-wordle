@@ -11,7 +11,7 @@ public class Gridshadow implements Drawable {
         int x = 0;
         for (int i = 0; i < 6; i++){
             y += 57;
-            x = 465;
+            x = 475;
             for (int j = 0; j < 5; j++){
                 gui.fillRect(x,y,50,50);
                 x += 54;

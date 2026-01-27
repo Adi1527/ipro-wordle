@@ -1,6 +1,7 @@
 package wordle.view.gui;
 
 import ch.mvcbase.ComponentGuiBase;
+import ch.trick17.gui.Color;
 import ch.trick17.gui.component.Component;
 import ch.trick17.gui.widget.Label;
 import wordle.controller.WordleController;
@@ -11,10 +12,11 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
     public static final double IMG_HEIGHT = 397;
     public static final double SCALE = 2;
 
-    Label[][] label;
+    ColoredLabel[][] label;  // ← Geändert von Label zu ColoredLabel
+    Label messageLabel;
 
     public WordleGUI(WordleController controller, int frameRate) {
-        label = new Label[6][5];
+        label = new ColoredLabel[6][5];  // ← Initialisierung VOR super()
         super(controller, "Wordle", (int) (IMG_WIDTH * SCALE), (int) ((IMG_HEIGHT + 28) * SCALE), frameRate);
     }
 
@@ -27,23 +29,27 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
                 controller.handleEnter();
             } else if (key.length() == 1) {
                 controller.handleKeyInput(key.charAt(0));
+            } else if (key.equals("escape")) {
+                System.exit(0);
             }
         });
     }
 
     @Override
     protected Component[] createComponents(WordleModel model) {
-        Component[] components = new Component[34];
+        Component[] components = new Component[35];
         components[0] = new Background();
         components[1] = new Gridshadow();
         components[2] = new Grid5x6();
         components[3] = new Tastatur();
+
         int index = 4;
         int y = 27;
         for (int i = 0; i < 6; i++){
-            int x = 490;
+            int x = 475;
             for (int j = 0; j < 5; j++){
-                label[i][j] = new Label(model.getLetter(i,j), x, y, 50);
+                // ColoredLabel statt Label verwenden!
+                label[i][j] = new ColoredLabel(model.getLetter(i, j), x + 25, y, 50);
                 label[i][j].setTextAlignCenter();
                 components[index] = label[i][j];
                 index++;
@@ -51,6 +57,12 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
             }
             y += 57;
         }
+
+        messageLabel = new Label("", 600, 420, 40);
+        messageLabel.setTextAlignCenter();
+        messageLabel.setBold(true);
+        components[34] = messageLabel;
+
         return components;
     }
 
@@ -58,8 +70,44 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
     public void updateComponents(WordleModel model) {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
+                // 1. Text aktualisieren
                 label[i][j].setText(model.getLetter(i, j));
+
+                // 2. Farbe basierend auf Model-Daten setzen
+                int colorValue = model.GetColor(i, j);
+
+                if (colorValue == 1) {
+                    // Grün - richtiger Buchstabe, richtige Position
+                    label[i][j].setBackgroundColor(new Color(106, 170, 100));
+                    label[i][j].setTextColor(new Color(255, 255, 255));
+
+                } else if (colorValue == -1) {
+                    // Gelb - richtiger Buchstabe, falsche Position
+                    label[i][j].setBackgroundColor(new Color(201, 180, 88));
+                    label[i][j].setTextColor(new Color(255, 255, 255));
+
+                } else if (colorValue == 0 && i < model.getCurrentRowIndex()) {
+                    // Grau - Buchstabe nicht im Wort (nur wenn Buchstabe existiert)
+                    label[i][j].setBackgroundColor(new Color(120, 124, 126));
+                    label[i][j].setTextColor(new Color(255, 255, 255));
+
+                } else {
+                    // Weiß - noch nicht ausgefüllt oder leer
+                    label[i][j].setBackgroundColor(new Color(255, 255, 255));
+                    label[i][j].setTextColor(new Color(0, 0, 0));
+                }
             }
         }
+
+        if (model.isGameWon()) {
+            messageLabel.setText("GEWONNEN!");
+            messageLabel.setTextColor(new Color(0, 200, 0));
+        } else if (model.isGameLost()) {
+            messageLabel.setText("VERLOREN! Wort: " + model.getSolution().toUpperCase());
+            messageLabel.setTextColor(new Color(200, 0, 0));
+        } else {
+            messageLabel.setText("");  // Leer während Spiel läuft
+        }
+
     }
 }
