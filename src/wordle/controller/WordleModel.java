@@ -14,6 +14,7 @@ public class WordleModel {
     int currentcol = 0;
     private boolean gameWon = false;
     private boolean gameLost = false;
+    private boolean wrongInput = false;
 
     private String[] WordList;
     private String Solution;
@@ -34,6 +35,14 @@ public class WordleModel {
     // NEU: Getter für Solution (für Debugging/Anzeige bei Verlieren)
     public String getSolution() {
         return Solution;
+    }
+
+    public boolean isWrongInput() {
+        return wrongInput;
+    }
+
+    public boolean setWrongInput(){
+        return wrongInput = true;
     }
 
     public boolean isGameWon() {
@@ -80,6 +89,9 @@ public class WordleModel {
     }
 
     public void removeLetter(){
+        if (wrongInput == true) {
+            wrongInput = false;
+        }
         if (currentcol > 0){
             currentcol--;
             grid[currentrow][currentcol] = "";
@@ -87,19 +99,19 @@ public class WordleModel {
     }
 
     // Vereinfachtes submitword - macht NUR Daten-Logik
-    public void submitword(){
+    public boolean submitword(){
+        wrongInput = false;
         if (currentcol == 5 && currentrow < 6 && Arrays.asList(WordList).contains(getCurrentWord())){
             // Farben berechnen und speichern
             CustomString[] Guess = CheckLetterAndColor(TheGuessToArray(getCurrentWord()), SolutionArray);
-
             // Farben ins Colors-Array übertragen
             for (int i = 0; i < 5; i++) {
                 Colors[currentrow][i] = Guess[i].color;
             }
-
             currentrow++;
             currentcol = 0;
-        }
+            return wrongInput;
+        } else return setWrongInput();
     }
 
     public String getLetter(int row, int col) {

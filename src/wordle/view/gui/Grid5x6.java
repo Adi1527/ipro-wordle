@@ -8,14 +8,14 @@ public class Grid5x6 implements Drawable {
 
     @Override
     public void draw(Gui gui) {
-    gui.setColor(new Color(0,0,0));
+    gui.setColor(new Color(150,150,0));
     int y = -30;
     int x = 0;
     for (int i = 0; i < 6; i++){
         y += 57;
         x = 475;
         for (int j = 0; j < 5; j++){
-            gui.drawRect(x,y,50,50);
+            gui.drawRect(x,y,52,52);
             x += 54;
         }
     }

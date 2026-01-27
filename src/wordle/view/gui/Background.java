@@ -10,7 +10,7 @@ public class Background implements Drawable {
 
     @Override
     public void draw(Gui gui) {
-        gui.setColor(new Color(180,180,180));
+        gui.setColor(new Color(0,0,100));
         gui.fillRect(0,0,IMG_WIDTH*SCALE,(IMG_HEIGHT+28)*SCALE);
     }
 }

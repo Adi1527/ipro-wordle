@@ -14,6 +14,8 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
 
     ColoredLabel[][] label;  // ← Geändert von Label zu ColoredLabel
     Label messageLabel;
+    Label infoLabel;
+    Label wrongInput;
 
     public WordleGUI(WordleController controller, int frameRate) {
         label = new ColoredLabel[6][5];  // ← Initialisierung VOR super()
@@ -37,7 +39,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
 
     @Override
     protected Component[] createComponents(WordleModel model) {
-        Component[] components = new Component[35];
+        Component[] components = new Component[37];
         components[0] = new Background();
         components[1] = new Gridshadow();
         components[2] = new Grid5x6();
@@ -58,10 +60,21 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
             y += 57;
         }
 
-        messageLabel = new Label("", 600, 420, 40);
+        messageLabel = new Label("", 600, 420, 50);
         messageLabel.setTextAlignCenter();
         messageLabel.setBold(true);
         components[34] = messageLabel;
+
+        infoLabel = new Label("Für Restart 'R' drücken \nZum beenden 'Esc' drücken ",2,810,30);
+        infoLabel.setTextAlignLeft();
+        infoLabel.setItalic(true);
+        infoLabel.setTextColor(new Color(255,255,0));
+        components[35] = infoLabel;
+
+        wrongInput = new Label("",600,420,50);
+        wrongInput.setTextAlignCenter();
+        wrongInput.setTextColor(new Color(255,255,0));
+        components[36] = wrongInput;
 
         return components;
     }
@@ -78,22 +91,22 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
 
                 if (colorValue == 1) {
                     // Grün - richtiger Buchstabe, richtige Position
-                    label[i][j].setBackgroundColor(new Color(106, 170, 100));
+                    label[i][j].setBackgroundColor(new Color(34, 139, 34));
                     label[i][j].setTextColor(new Color(255, 255, 255));
 
                 } else if (colorValue == -1) {
-                    // Gelb - richtiger Buchstabe, falsche Position
-                    label[i][j].setBackgroundColor(new Color(201, 180, 88));
+                    // Orange - richtiger Buchstabe, falsche Position
+                    label[i][j].setBackgroundColor(new Color(255, 165, 0));
                     label[i][j].setTextColor(new Color(255, 255, 255));
 
                 } else if (colorValue == 0 && i < model.getCurrentRowIndex()) {
                     // Grau - Buchstabe nicht im Wort (nur wenn Buchstabe existiert)
-                    label[i][j].setBackgroundColor(new Color(120, 124, 126));
-                    label[i][j].setTextColor(new Color(255, 255, 255));
+                    label[i][j].setBackgroundColor(new Color(190, 190, 190));
+                    label[i][j].setTextColor(new Color(0, 0, 0));
 
                 } else {
                     // Weiß - noch nicht ausgefüllt oder leer
-                    label[i][j].setBackgroundColor(new Color(255, 255, 255));
+                    label[i][j].setBackgroundColor(new Color(225, 225, 225));
                     label[i][j].setTextColor(new Color(0, 0, 0));
                 }
             }
@@ -108,6 +121,10 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         } else {
             messageLabel.setText("");  // Leer während Spiel läuft
         }
+
+        if (model.isWrongInput()){
+            wrongInput.setText("Ungültiges Wort!");
+        } else wrongInput.setText("");
 
     }
 }

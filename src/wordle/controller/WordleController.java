@@ -33,16 +33,18 @@ public class WordleController extends ControllerBase<WordleModel> {
     }
 
     public void handleEnter() {
+        boolean wrongInput = false;
         // Blockiere Input wenn Spiel vorbei
         if (model.isGameWon() || model.isGameLost()) {
             return;
         }
-
         // Wort submitten (validierung passiert im Model)
-        model.submitword();
-
+        wrongInput = model.submitword();
+        if (wrongInput == false){
+            checkGameState();
+        }
         // Nach submit: Spielstatus prüfen
-        checkGameState();
+
     }
 
     private void checkGameState() {

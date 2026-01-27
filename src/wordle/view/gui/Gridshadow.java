@@ -6,7 +6,7 @@ import ch.trick17.gui.component.Drawable;
 public class Gridshadow implements Drawable {
     @Override
     public void draw(Gui gui) {
-        gui.setColor(225,225,225);
+        gui.setColor(0,0,0);
         int y = -30;
         int x = 0;
         for (int i = 0; i < 6; i++){
