@@ -70,12 +70,12 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         infoLabel = new Label("Für Restart 'R' drücken \nZum beenden 'Esc' drücken ",2,810,30);
         infoLabel.setTextAlignLeft();
         infoLabel.setItalic(true);
-        infoLabel.setTextColor(new Color(255,255,0));
+        infoLabel.setTextColor(new Color(255,255,255));
         components[34] = infoLabel;
 
         wrongInput = new Label("",600,420,50);
         wrongInput.setTextAlignCenter();
-        wrongInput.setTextColor(new Color(255,255,0));
+        wrongInput.setTextColor(new Color(0,0,0));
         components[35] = wrongInput;
 
 

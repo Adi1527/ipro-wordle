@@ -171,33 +171,29 @@ public class WordleModel {
 
 
     CustomString[] CheckLetterAndColor(CustomString[] guess, GuessString[] right) {
-        // Temporäres Array für Häufigkeiten erstellen
-        int[] tempFreq = new int[5];
+        int[] tempFreq = new int[26];
         for (int i = 0; i < 5; i++) {
-            tempFreq[i] = right[i].frequency + 1;
+            char c = Character.toLowerCase(right[i].c);
+            tempFreq[c - 'a']++;
         }
-
-        // Erst alle grünen markieren
         for (int i = 0; i < 5; i++) {
-            if (guess[i].c == right[i].c) {
-                guess[i].color = 1; // grün
-                tempFreq[i]--;
+            if (Character.toLowerCase(guess[i].c) == Character.toLowerCase(right[i].c)) {
+                guess[i].color = 1;
+                char c = Character.toLowerCase(guess[i].c);
+                tempFreq[c - 'a']--;
             }
         }
-
-        // Dann gelbe markieren
         for (int i = 0; i < 5; i++) {
             if (guess[i].color == 0) {
-                int j = 0;
-                while (j < 5 && !(guess[i].c == right[j].c && tempFreq[j] > 0)) {
-                    j++;
-                }
-                if (j < 5) {
-                    guess[i].color = -1;
-                    tempFreq[j]--;
+                char guessChar = Character.toLowerCase(guess[i].c);
+
+                if (tempFreq[guessChar - 'a'] > 0) {
+                    guess[i].color = -1;  // gelb
+                    tempFreq[guessChar - 'a']--;
                 }
             }
         }
+
         return guess;
     }
 
