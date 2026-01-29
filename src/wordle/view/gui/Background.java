@@ -8,10 +8,8 @@ import static wordle.view.gui.WordleGUI.*;
 
 public class Background implements Drawable {
 
-
     @Override
     public void draw(Gui gui) {
         gui.drawImage("resources/img/background.png",-170,0);
-
     }
 }
