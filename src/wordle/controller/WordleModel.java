@@ -15,16 +15,49 @@ public class WordleModel {
     private boolean gameWon = false;
     private boolean gameLost = false;
     private boolean wrongInput = false;
-
     private String[] WordList;
     private String Solution;
     private int[][] Colors = new int[6][5];  // 0=grau, 1=grün, -1=gelb
     GuessString[] SolutionArray;
+    private int[] keyboardStatus = new int[26];
+
+
 
     public WordleModel() {
         this.WordList = GetArray();
         this.Solution = GetRandomWord(WordList);
         this.SolutionArray = GuessToArray(Solution);
+    }
+
+    public int getKeyStatus(char letter) {
+        int index = Character.toLowerCase(letter) - 'a';
+        if (index < 0 || index >= 26) {
+            return 0;
+        }
+        return keyboardStatus[index];
+    }
+    private void updateKeyboardStatus(CustomString[] guess) {
+        for (int i = 0; i < 5; i++) {
+            char letter = Character.toLowerCase(guess[i].c);
+            int index = letter - 'a';
+
+            if (index < 0 || index >= 26) {
+                continue;
+            }
+
+            // Grün überschreibt alles
+            if (guess[i].color == 1) {
+                keyboardStatus[index] = 1;
+            }
+            // Gelb überschreibt nur "noch nicht benutzt" und "dunkelgrau"
+            else if (guess[i].color == -1 && keyboardStatus[index] != 1) {
+                keyboardStatus[index] = -1;
+            }
+            // Dunkelgrau nur wenn noch nie benutzt
+            else if (guess[i].color == 0 && keyboardStatus[index] == 0) {
+                keyboardStatus[index] = -2;
+            }
+        }
     }
 
     // Getter für Farben
@@ -60,6 +93,8 @@ public class WordleModel {
     public void setGameLost(boolean lost) {
         this.gameLost = lost;
     }
+
+
 
     public String[] GetArray(){
         String[] list = new String[5353];
@@ -108,6 +143,7 @@ public class WordleModel {
             for (int i = 0; i < 5; i++) {
                 Colors[currentrow][i] = Guess[i].color;
             }
+            updateKeyboardStatus(Guess);
             currentrow++;
             currentcol = 0;
             return wrongInput;
@@ -212,7 +248,9 @@ public class WordleModel {
                 grid[i][j] = "";
             }
         }
-
+        for (int i = 0; i < 26; i++) {
+            keyboardStatus[i] = 0;
+        }
         for (int i = 0; i < 6; i++){
             for (int j = 0; j < 5; j++){
                 Colors[i][j] = 0;

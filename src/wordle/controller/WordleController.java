@@ -28,7 +28,6 @@ public class WordleController extends ControllerBase<WordleModel> {
         if (model.isGameWon() || model.isGameLost()) {
             return;
         }
-
         model.removeLetter();
     }
 

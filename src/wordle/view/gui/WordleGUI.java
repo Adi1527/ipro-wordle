@@ -16,6 +16,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
     Label messageLabel;
     Label infoLabel;
     Label wrongInput;
+    ColoredKeyboard keyboard;
 
     public WordleGUI(WordleController controller, int frameRate) {
         label = new ColoredLabel[6][5];  // ← Initialisierung VOR super()
@@ -43,7 +44,9 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         components[0] = new Background();
         components[1] = new Gridshadow();
         components[2] = new Grid5x6();
-        components[3] = new Tastatur();
+
+        keyboard = new ColoredKeyboard(model);
+        components[3] = keyboard;
 
         int index = 4;
         int y = 27;
@@ -75,6 +78,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         wrongInput.setTextAlignCenter();
         wrongInput.setTextColor(new Color(255,255,0));
         components[36] = wrongInput;
+
 
         return components;
     }
@@ -121,7 +125,6 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         } else {
             messageLabel.setText("");  // Leer während Spiel läuft
         }
-
         if (model.isWrongInput()){
             wrongInput.setText("Ungültiges Wort!");
         } else wrongInput.setText("");
