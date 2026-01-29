@@ -40,15 +40,14 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
 
     @Override
     protected Component[] createComponents(WordleModel model) {
-        Component[] components = new Component[37];
+        Component[] components = new Component[36];
         components[0] = new Background();
-        components[1] = new Gridshadow();
-        components[2] = new Grid5x6();
+        components[1] = new Grid5x6();
 
         keyboard = new ColoredKeyboard(model);
-        components[3] = keyboard;
+        components[2] = keyboard;
 
-        int index = 4;
+        int index = 3;
         int y = 27;
         for (int i = 0; i < 6; i++){
             int x = 475;
@@ -66,18 +65,18 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         messageLabel = new Label("", 600, 420, 50);
         messageLabel.setTextAlignCenter();
         messageLabel.setBold(true);
-        components[34] = messageLabel;
+        components[33] = messageLabel;
 
         infoLabel = new Label("Für Restart 'R' drücken \nZum beenden 'Esc' drücken ",2,810,30);
         infoLabel.setTextAlignLeft();
         infoLabel.setItalic(true);
         infoLabel.setTextColor(new Color(255,255,0));
-        components[35] = infoLabel;
+        components[34] = infoLabel;
 
         wrongInput = new Label("",600,420,50);
         wrongInput.setTextAlignCenter();
         wrongInput.setTextColor(new Color(255,255,0));
-        components[36] = wrongInput;
+        components[35] = wrongInput;
 
 
         return components;

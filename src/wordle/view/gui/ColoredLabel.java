@@ -6,7 +6,7 @@ import ch.trick17.gui.widget.Label;
 
 public class ColoredLabel extends Label {
     private Color backgroundColor = new Color(255, 255, 255);
-    private static final int BOX_SIZE = 50;
+    private static final double BOX_SIZE = 50;
 
     public ColoredLabel(String text, double x, double y, double height) {
         super(text, x, y, height);
