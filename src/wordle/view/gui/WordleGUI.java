@@ -48,7 +48,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         components[2] = keyboard;
 
         int index = 3;
-        int y = 27;
+        int y = 54;
         for (int i = 0; i < 6; i++){
             int x = 475;
             for (int j = 0; j < 5; j++){
