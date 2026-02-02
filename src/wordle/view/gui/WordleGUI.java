@@ -116,10 +116,10 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         }
 
         if (model.isGameWon()) {
-            messageLabel.setText("YOU'VE WON!");
+            messageLabel.setText("CONGRATULATIONS YOU'VE WON!");
             messageLabel.setTextColor(new Color(0, 200, 0));
         } else if (model.isGameLost()) {
-            messageLabel.setText("GAME OVER! Word: " + model.getSolution().toUpperCase());
+            messageLabel.setText("GAME OVER! \n correct Word: " + model.getSolution().toUpperCase());
             messageLabel.setTextColor(new Color(200, 0, 0));
         } else {
             messageLabel.setText("");  // Leer während Spiel läuft
