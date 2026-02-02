@@ -113,10 +113,10 @@ public class WordleModel {
     }
 
     public String[] GetArray2(){
-        String[] list = new String[10657];
+        String[] list = new String[12972];
         InputStream is = getClass().getResourceAsStream("/Data/words_en-guessable.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        for (int i = 0; i < 10657; i++){
+        for (int i = 0; i < 12972; i++){
             try {
                 list[i] = reader.readLine();
             } catch (IOException e){

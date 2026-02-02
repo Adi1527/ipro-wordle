@@ -67,7 +67,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         messageLabel.setBold(true);
         components[33] = messageLabel;
 
-        infoLabel = new Label("Für Restart 'R' drücken \nZum beenden 'Esc' drücken ",2,810,30);
+        infoLabel = new Label("To Restart the Round Press 'R' \nTo end the Game press 'ESC' ",2,810,30);
         infoLabel.setTextAlignLeft();
         infoLabel.setItalic(true);
         infoLabel.setTextColor(new Color(255,255,255));
@@ -116,17 +116,18 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         }
 
         if (model.isGameWon()) {
-            messageLabel.setText("GEWONNEN!");
+            messageLabel.setText("YOU'VE WON!");
             messageLabel.setTextColor(new Color(0, 200, 0));
         } else if (model.isGameLost()) {
-            messageLabel.setText("VERLOREN! Wort: " + model.getSolution().toUpperCase());
+            messageLabel.setText("GAME OVER! Word: " + model.getSolution().toUpperCase());
             messageLabel.setTextColor(new Color(200, 0, 0));
         } else {
             messageLabel.setText("");  // Leer während Spiel läuft
         }
         if (model.isWrongInput()){
-            wrongInput.setText("Ungültiges Wort!");
+            wrongInput.setTextColor(new Color(255,0,0));
+            wrongInput.setBold(true);
+            wrongInput.setText("INVALID INPUT!");
         } else wrongInput.setText("");
-
     }
 }
