@@ -16,6 +16,7 @@ public class WordleModel {
     private boolean gameLost = false;
     private boolean wrongInput = false;
     private String[] WordList;
+    private String[] GuessList;
     private String Solution;
     private int[][] Colors = new int[6][5];  // 0=grau, 1=grün, -1=gelb
     GuessString[] SolutionArray;
@@ -27,6 +28,7 @@ public class WordleModel {
         this.WordList = GetArray();
         this.Solution = GetRandomWord(WordList);
         this.SolutionArray = GuessToArray(Solution);
+        this.GuessList = GetArray2();
     }
 
     public int getKeyStatus(char letter) {
@@ -97,10 +99,24 @@ public class WordleModel {
 
 
     public String[] GetArray(){
-        String[] list = new String[5353];
-        InputStream is = getClass().getResourceAsStream("/Data/words_de.txt");
+        String[] list = new String[2315];
+        InputStream is = getClass().getResourceAsStream("/Data/words_en-toguess.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        for (int i = 0; i < 5353; i++){
+        for (int i = 0; i < 2315; i++){
+            try {
+                list[i] = reader.readLine();
+            } catch (IOException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return list;
+    }
+
+    public String[] GetArray2(){
+        String[] list = new String[10657];
+        InputStream is = getClass().getResourceAsStream("/Data/words_en-guessable.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        for (int i = 0; i < 10657; i++){
             try {
                 list[i] = reader.readLine();
             } catch (IOException e){
@@ -112,7 +128,7 @@ public class WordleModel {
 
     String GetRandomWord(String[] list){
         Random rng = new Random();
-        int a = rng.nextInt(5353);
+        int a = rng.nextInt(2315);
         return list[a];
     }
 
@@ -133,10 +149,9 @@ public class WordleModel {
         }
     }
 
-    // Vereinfachtes submitword - macht NUR Daten-Logik
     public boolean submitword(){
         wrongInput = false;
-        if (currentcol == 5 && currentrow < 6 && Arrays.asList(WordList).contains(getCurrentWord())){
+        if (currentcol == 5 && currentrow < 6 && Arrays.asList(GuessList).contains(getCurrentWord())){
             // Farben berechnen und speichern
             CustomString[] Guess = CheckLetterAndColor(TheGuessToArray(getCurrentWord()), SolutionArray);
             // Farben ins Colors-Array übertragen
