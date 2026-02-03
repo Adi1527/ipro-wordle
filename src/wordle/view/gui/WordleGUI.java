@@ -2,7 +2,9 @@ package wordle.view.gui;
 
 import ch.mvcbase.ComponentGuiBase;
 import ch.trick17.gui.Color;
+import ch.trick17.gui.Gui;
 import ch.trick17.gui.component.Component;
+import ch.trick17.gui.widget.Button;
 import ch.trick17.gui.widget.Label;
 import wordle.controller.WordleController;
 import wordle.controller.WordleModel;
@@ -17,6 +19,8 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
     Label infoLabel;
     Label wrongInput;
     ColoredKeyboard keyboard;
+    Button help;
+    Rules rules;
 
     public WordleGUI(WordleController controller, int frameRate) {
         label = new ColoredLabel[6][5];  // ← Initialisierung VOR super()
@@ -40,7 +44,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
 
     @Override
     protected Component[] createComponents(WordleModel model) {
-        Component[] components = new Component[36];
+        Component[] components = new Component[38];
         components[0] = new Background();
         components[1] = new Grid5x6();
 
@@ -48,7 +52,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         components[2] = keyboard;
 
         int index = 3;
-        int y = 54;
+        int y = 154;
         for (int i = 0; i < 6; i++){
             int x = 475;
             for (int j = 0; j < 5; j++){
@@ -62,7 +66,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
             y += 57;
         }
 
-        messageLabel = new Label("", 600, 420, 50);
+        messageLabel = new Label("", 600, 520, 50);
         messageLabel.setTextAlignCenter();
         messageLabel.setBold(true);
         components[33] = messageLabel;
@@ -73,11 +77,16 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         infoLabel.setTextColor(new Color(255,255,255));
         components[34] = infoLabel;
 
-        wrongInput = new Label("",600,420,50);
+        wrongInput = new Label("",600,520,50);
         wrongInput.setTextAlignCenter();
         wrongInput.setTextColor(new Color(0,0,0));
         components[35] = wrongInput;
 
+        help = new Button("?",true,1140,10,50,50);
+        components[36] = help;
+
+        rules = new Rules();
+        components[37] = rules;
 
         return components;
     }
@@ -117,7 +126,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
 
         if (model.isGameWon()) {
             messageLabel.setText("CONGRATULATIONS YOU'VE WON!");
-            messageLabel.setTextColor(new Color(0, 200, 0));
+            messageLabel.setTextColor(new Color(34, 139, 34));
         } else if (model.isGameLost()) {
             messageLabel.setText("GAME OVER! \n correct Word: " + model.getSolution().toUpperCase());
             messageLabel.setTextColor(new Color(200, 0, 0));
@@ -129,5 +138,10 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
             wrongInput.setBold(true);
             wrongInput.setText("INVALID INPUT!");
         } else wrongInput.setText("");
+
+        if (help.isHovered()){
+            rules.setVisible(true);
+        } else rules.setVisible(false);
+
     }
 }

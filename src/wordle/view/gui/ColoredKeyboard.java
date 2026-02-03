@@ -19,7 +19,7 @@ public class ColoredKeyboard implements Drawable {
 
     @Override
     public void draw(Gui gui) {
-        int y = 500;
+        int y = 625;
         int x = 300;
         int size = 50;
 

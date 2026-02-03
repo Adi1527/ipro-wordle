@@ -13,9 +13,9 @@ import static java.util.Objects.requireNonNull;
 
 public class Button extends Widget implements Hoverable, Clickable {
 
-    public static final Color DEFAULT_BACKGROUND_COLOR = new Color(41, 127, 213);
-    public static final Color DEFAULT_TEXT_COLOR = new Color(255, 255, 255);
-    public static final Color DEFAULT_HOVERED_BACKGROUND_COLOR = new Color(31, 95, 160);
+    public static final Color DEFAULT_BACKGROUND_COLOR = new Color(255, 255, 255);
+    public static final Color DEFAULT_TEXT_COLOR = new Color(0, 0, 0);
+    public static final Color DEFAULT_HOVERED_BACKGROUND_COLOR = new Color(100, 100, 100);
     public static final Color DEFAULT_HOVERED_TEXT_COLOR = DEFAULT_TEXT_COLOR;
 
     private final boolean isCircle;

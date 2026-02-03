@@ -10,7 +10,7 @@ public class Grid5x6 implements Drawable {
     public void draw(Gui gui) {
     gui.setColor(new Color(50,50,50));
     gui.setStrokeWidth(3);
-    int y = -3;
+    int y = 97;
     int x = 0;
     for (int i = 0; i < 6; i++){
         y += 57;

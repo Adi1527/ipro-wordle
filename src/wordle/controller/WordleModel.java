@@ -274,6 +274,4 @@ public class WordleModel {
         Solution = GetRandomWord(WordList);
         SolutionArray = GuessToArray(Solution);
     }
-
-
 }
