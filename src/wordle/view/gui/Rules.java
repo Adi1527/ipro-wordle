@@ -12,7 +12,7 @@ public class Rules implements Drawable {
 
     public void draw(Gui gui){
         if (visible){
-            gui.drawImageCentered("resources/img/rules.png",600,389,0.8);
+            gui.drawImageCentered("resources/img/rules.png",600,395,0.8);
         }
 
     }

@@ -82,7 +82,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         wrongInput.setTextColor(new Color(0,0,0));
         components[35] = wrongInput;
 
-        help = new Button("?",true,1140,10,50,50);
+        help = new Button("?",true,1130,10,60,60);
         components[36] = help;
 
         rules = new Rules();
