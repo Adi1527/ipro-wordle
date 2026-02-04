@@ -6,12 +6,13 @@ import java.util.function.BiConsumer;
 import ch.trick17.gui.Color;
 import ch.trick17.gui.Gui;
 import ch.trick17.gui.component.Clickable;
+import ch.trick17.gui.component.Drawable;
 import ch.trick17.gui.component.Hoverable;
 import ch.trick17.gui.component.Rectangle;
 
 import static java.util.Objects.requireNonNull;
 
-public class Button extends Widget implements Hoverable, Clickable {
+public class Button extends Widget implements Hoverable, Clickable, Drawable {
 
     public static final Color DEFAULT_BACKGROUND_COLOR = new Color(255, 255, 255);
     public static final Color DEFAULT_TEXT_COLOR = new Color(0, 0, 0);

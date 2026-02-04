@@ -4,8 +4,15 @@ import ch.trick17.gui.Color;
 import ch.trick17.gui.Gui;
 import ch.trick17.gui.component.Drawable;
 
+/**
+ * zeichnet das Grid um die eingabekästchen.
+ */
 public class Grid5x6 implements Drawable {
 
+    /**
+     * die funktion welche es zeichnet
+     * @param gui klasse welche das zeichnen ermöglicht.
+     */
     @Override
     public void draw(Gui gui) {
     gui.setColor(new Color(50,50,50));

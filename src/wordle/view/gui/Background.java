@@ -3,6 +3,9 @@ package wordle.view.gui;
 import ch.trick17.gui.Gui;
 import ch.trick17.gui.component.Drawable;
 
+/**
+ * Zeichnet den Hintergrund und den Titel
+ */
 public class Background implements Drawable {
     @Override
     public void draw(Gui gui) {

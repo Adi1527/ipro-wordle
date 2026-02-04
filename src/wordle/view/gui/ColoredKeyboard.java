@@ -5,6 +5,9 @@ import ch.trick17.gui.Gui;
 import ch.trick17.gui.component.Drawable;
 import wordle.controller.WordleModel;
 
+/**
+ *  eine Klasse welche zuständig ist um die Tastatur anzuzeigen mit den Bereits genutzten Buchstaben.
+ */
 public class ColoredKeyboard implements Drawable {
 
     private static final String ROW1 = "QWERTYUIOP";
@@ -13,10 +16,18 @@ public class ColoredKeyboard implements Drawable {
 
     private WordleModel model;
 
+    /**
+     * Konstruktor für das Keyboard welches die nutzung im Model ermöglicht
+     * @param model Klasse Model
+     */
     public ColoredKeyboard(WordleModel model) {
         this.model = model;
     }
 
+    /**
+     * zeichnet das Keyboard
+     * @param gui Klasse welche das zeichnen ermöglicht
+     */
     @Override
     public void draw(Gui gui) {
         int y = 625;
@@ -46,6 +57,14 @@ public class ColoredKeyboard implements Drawable {
         }
     }
 
+    /**
+     *Methode welche die Labels zeichnet
+     * @param gui Klasse zum zeichnen
+     * @param x X-Achsenposition
+     * @param y Y-Achsenposition
+     * @param size Grösse des Labels
+     * @param letter Welcher Buchstabe gezeichnet werden soll
+     */
     private void drawKey(Gui gui, int x, int y, int size, char letter) {
         // Farbe basierend auf Status holen
         int status = model.getKeyStatus(letter);
@@ -74,6 +93,11 @@ public class ColoredKeyboard implements Drawable {
         gui.drawString(String.valueOf(letter), x + size / 2.0, y + size * 0.70);
     }
 
+    /**
+     * gibt die Farbe dem Label, damit der Buchstabe richtig markiert wird.
+     * @param status sagt aus welche Farbe dem Label hinzugefügt wird
+     * @return gibt die korrekte Farbe zurück
+     */
     private Color getColorForStatus(int status) {
         switch (status) {
             case 1:  // Grün - richtige Position

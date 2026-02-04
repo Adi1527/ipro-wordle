@@ -82,7 +82,7 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         wrongInput.setTextColor(new Color(0,0,0));
         components[35] = wrongInput;
 
-        help = new Button("?",true,1130,10,60,60);
+        help = new Button("?",true,1135,10,55,55);
         components[36] = help;
 
         rules = new Rules();
@@ -142,6 +142,5 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         if (help.isHovered()){
             rules.setVisible(true);
         } else rules.setVisible(false);
-
     }
 }
