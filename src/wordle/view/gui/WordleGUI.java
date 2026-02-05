@@ -9,7 +9,9 @@ import ch.trick17.gui.widget.Label;
 import wordle.controller.WordleController;
 import wordle.controller.WordleModel;
 
+
 public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
+
     public static final double IMG_WIDTH = 600;
     public static final double IMG_HEIGHT = 397;
     public static final double SCALE = 2;
@@ -22,11 +24,20 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
     Button help;
     Rules rules;
 
+    /**
+     * initialisiert das Gui
+     * @param controller ruft den controller auf für die Logik
+     * @param frameRate setzt die FrameRate des Gui fest
+     */
     public WordleGUI(WordleController controller, int frameRate) {
-        label = new ColoredLabel[6][5];  // ← Initialisierung VOR super()
+        label = new ColoredLabel[6][5];
         super(controller, "Wordle", (int) (IMG_WIDTH * SCALE), (int) ((IMG_HEIGHT + 28) * SCALE), frameRate);
     }
 
+    /**
+     * Handelt die einzelnen eingaben der Tastatur
+     * @param controller ruft die Methoden aus dem Controller auf um die Eingaben zu verarbeiten.
+     */
     @Override
     public void setupEventHandler(WordleController controller){
         setOnKeyReleased(key -> {
@@ -42,6 +53,11 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         });
     }
 
+    /**
+     * Erstellt das Gui und kreiirt die einzelnen Componente.
+     * @param model ruft die Klasse Model auf und benutzt die verschiedenen Methoden darin
+     * @return Gibt die Components in das Gui zurück
+     */
     @Override
     protected Component[] createComponents(WordleModel model) {
         Component[] components = new Component[38];
@@ -91,6 +107,10 @@ public class WordleGUI extends ComponentGuiBase<WordleModel, WordleController> {
         return components;
     }
 
+    /**
+     * Updated die bereits erstellten Komponenten im GUI.
+     * @param model ruft die Klasse Model auf um die verschiedenen Methoden zu nutzen.
+     */
     @Override
     public void updateComponents(WordleModel model) {
         for (int i = 0; i < 6; i++) {
