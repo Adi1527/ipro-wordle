@@ -265,6 +265,8 @@ public class WordleModel {
         return currentrow;
     }
 
+    public int getCurrentCol() {return currentcol;}
+
     /**
      * vergleicht das Lösungswort mit dem geratenen Wort und weist die richtigen Farben den Buchstaben zu gemäss,
      * Wordle Logik
@@ -273,7 +275,7 @@ public class WordleModel {
      * @param right der Lösungsstring mit info zu wie oft ein char im wort vorkommt.
      * @return der erratene String, mit zugewiesenen Farben.
      */
-    CustomString[] CheckLetterAndColor(CustomString[] guess, GuessString[] right) {
+    public CustomString[] CheckLetterAndColor(CustomString[] guess, GuessString[] right) {
         int[] tempFreq = new int[26];
         for (int i = 0; i < 5; i++) {
             char c = Character.toLowerCase(right[i].c);
@@ -306,7 +308,7 @@ public class WordleModel {
      * @param guess das Lösungswort wird mitgegeben.
      * @return gibt das Array zurück
      */
-    GuessString[] GuessToArray(String guess){
+    public GuessString[] GuessToArray(String guess){
         GuessString[] guessstring = new GuessString[5];
         for (int i = 0 ; i < 5; i++){
             guessstring[i] = new GuessString(guess.charAt(i),0);
@@ -326,7 +328,7 @@ public class WordleModel {
      * @param guess Das erratene Wort wird mitgegeben
      * @return der Array wird zurückgegeben ohne zugewiesene Farben
      */
-    CustomString[] TheGuessToArray(String guess) {
+    public CustomString[] TheGuessToArray(String guess) {
         CustomString[] first = new CustomString[5];
         for (int i = 0; i < 5; i++) {
             first[i] = new CustomString(guess.charAt(i), 0);
@@ -342,7 +344,7 @@ public class WordleModel {
      */
     public class CustomString {
         char c;
-        int color = 0;
+        public int color = 0;
         CustomString(char c, int color){
             this.c = c;
             this.color = color;
